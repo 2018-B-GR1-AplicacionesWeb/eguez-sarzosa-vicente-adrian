@@ -26,14 +26,8 @@ function sumarNNumeros(...numeros) {
     var tieneUnParametroDiferenteDeNumber = false;
 
     var resultado = 0;
-    for (var i = 0; i < numeros.length; i++) {
-        var esNumeroNumber = typeof numeros[i] == 'number';
-        if (!esNumeroNumber) {
-            tieneUnParametroDiferenteDeNumber = true;
-        } else{
-            resultado = resultado + numeros[i]
-        }
-    }
+
+
 
     if(tieneUnParametroDiferenteDeNumber){
         console.error('No envia numeros');
@@ -43,4 +37,21 @@ function sumarNNumeros(...numeros) {
     }
 }
 
-sumarNNumeros(1, 2, 3, "asd", true, false);
+function sumarNumerosDesdeUnArreglo(numeros){
+    var tieneUnParametroDiferenteDeNumber = false;
+    var resultado;
+    for (var i = 0; i < numeros.length; i++) {
+        var esNumeroNumber = typeof numeros[i] == 'number';
+        if (!esNumeroNumber) {
+            tieneUnParametroDiferenteDeNumber = true;
+        } else{
+            resultado = resultado + numeros[i]
+        }
+    }
+    return {
+        noEsNumber:tieneUnParametroDiferenteDeNumber,
+        resultado:resultado
+    }
+}
+
+console.log(sumarNNumeros(1, 2, 3, 4, 5));
