@@ -23,35 +23,35 @@ console.log(sumarDosNumeros("adrian", true, 3, 4, 5, 6, 7));
 
 
 function sumarNNumeros(...numeros) {
-    var tieneUnParametroDiferenteDeNumber = false;
 
-    var resultado = 0;
-
-
-
-    if(tieneUnParametroDiferenteDeNumber){
+    var respuesta = sumarNumerosDesdeUnArreglo(numeros);
+    console.log('respuesta',respuesta)
+    if (respuesta.noEsNumber) {
         console.error('No envia numeros');
         return 0;
-    }else{
-        return resultado;
+    } else {
+        return respuesta.resultado;
     }
 }
 
-function sumarNumerosDesdeUnArreglo(numeros){
+function sumarNumerosDesdeUnArreglo(numeros) {
     var tieneUnParametroDiferenteDeNumber = false;
-    var resultado;
+    var resultado = 0;
     for (var i = 0; i < numeros.length; i++) {
         var esNumeroNumber = typeof numeros[i] == 'number';
         if (!esNumeroNumber) {
             tieneUnParametroDiferenteDeNumber = true;
-        } else{
+        } else {
             resultado = resultado + numeros[i]
         }
     }
-    return {
-        noEsNumber:tieneUnParametroDiferenteDeNumber,
-        resultado:resultado
-    }
+
+    var respuesta = {
+        noEsNumber: tieneUnParametroDiferenteDeNumber,
+        resultado: resultado
+    };
+
+    return respuesta;
 }
 
 console.log(sumarNNumeros(1, 2, 3, 4, 5));
