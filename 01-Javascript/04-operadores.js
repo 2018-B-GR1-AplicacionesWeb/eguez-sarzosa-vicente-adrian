@@ -101,4 +101,17 @@ const elevarAlCuadradoV2 = numero => numero * numero;
 
 const arregloNombresDos = ['E', 'F', 'G', 'H'];
 
+const resultado = arregloDeNombres
+    .map( // mutar cada elemento del arreglo
+        valorActual => {
+            return valorActual + '.';
+        }
+    )  // Devolver un ARREGLO
+    .forEach(
+        (valorNuevo) => console.log(valorNuevo)
+    ); // undefined
+
+console.log(resultado);
+
+const arregloNumeros = [2, 3, 1, 5, 6, 4, 7, 8, 9, 10];
 
