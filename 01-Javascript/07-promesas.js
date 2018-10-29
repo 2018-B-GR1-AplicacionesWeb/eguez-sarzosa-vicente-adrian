@@ -3,11 +3,11 @@
 const fs = require('fs');
 
 const nuevaPromesaLectura = new Promise(
-    (resolve, reject) => {
-        fs.readFile('06-texto.txt', 'utf-8',
+    (resolve) => {
+        fs.readFile('06-texto23.txt', 'utf-8',
             (err, contenidoArchivo) => {
                 if (err) {
-                    reject(err);
+                    resolve('');
                 } else {
                     resolve(contenidoArchivo);
                 }
@@ -22,12 +22,12 @@ const nuevaPromesaEscritura = (contenidoLeido) => {
 
             const contenido = contenidoLeido ? contenidoLeido + 'Otro ola' : 'Otro ola';
 
-            fs.writeFile('06-texto.txt', contenido,
+            fs.writeFile('06-texto23.txt', contenido,
                 (err,) => {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve('LO QUE SEA');
+                        resolve(contenido);
                     }
                 });
         }
@@ -36,9 +36,14 @@ const nuevaPromesaEscritura = (contenidoLeido) => {
 
 nuevaPromesaLectura
     .then(
-        (resultadoOk) => {
-            console.log('Todo bien', resultadoOk);
-
+        (contenidoArchivo) => {
+            console.log('Todo bien', contenidoArchivo);
+            return nuevaPromesaEscritura(contenidoArchivo)
+        }
+    )
+    .then(
+        (contenidoCompleto) => {
+            console.log('Contenido completo', contenidoCompleto);
         }
     )
     .catch(
