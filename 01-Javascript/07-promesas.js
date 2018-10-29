@@ -44,6 +44,37 @@ nuevaPromesaLectura
     .then(
         (contenidoCompleto) => {
             console.log('Contenido completo', contenidoCompleto);
+            return nuevaPromesaEscritura(contenidoCompleto)
+        }
+    )
+    .then(
+        (contenidoCompleto) => {
+            console.log('Contenido completo', contenidoCompleto);
+            return nuevaPromesaEscritura(contenidoCompleto)
+        }
+    )
+    .then(
+        (contenidoCompleto) => {
+            console.log('Contenido completo', contenidoCompleto);
+            return nuevaPromesaEscritura(contenidoCompleto)
+        }
+    )
+    .then(
+        (contenidoCompleto) => {
+            console.log('Contenido completo', contenidoCompleto);
+            return nuevaPromesaEscritura(contenidoCompleto)
+        }
+    )
+    .then(
+        (contenidoCompleto) => {
+            console.log('Contenido completo', contenidoCompleto);
+            return nuevaPromesaEscritura(contenidoCompleto)
+        }
+    )
+    .then(
+        (contenidoCompleto) => {
+            console.log('Contenido completo', contenidoCompleto);
+            return nuevaPromesaEscritura(contenidoCompleto)
         }
     )
     .catch(
