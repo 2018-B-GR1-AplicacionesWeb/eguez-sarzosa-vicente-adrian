@@ -83,3 +83,42 @@ nuevaPromesaLectura
         }
     );
 
+
+// Async Sync
+// Async -> Se demora algo?
+
+// Callback -> Anonima
+
+const funcionConCallback = function (parametros, callback) {
+    callback() // ....
+};
+
+// Promesas -> Promise
+
+const funcionConPromesa = function (parametros) {
+    return new Promise(
+        (resolve, reject) => {
+            resolve();
+            reject();
+        }
+    );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
