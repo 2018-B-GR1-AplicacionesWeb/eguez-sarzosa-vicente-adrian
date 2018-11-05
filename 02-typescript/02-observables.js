@@ -27,18 +27,41 @@ observableUno$
 const promesita = () => {
     // @ts-ignore
     return new Promise((resolve, reject) => {
-        reject(':(');
+        resolve(':)');
     });
 };
+const ejecutarCodigoSyncrono = async () => {
+    console.log('Inicio');
+    try {
+        const resultadoPromesita = await promesita();
+        console.log(resultadoPromesita);
+    }
+    catch (e) {
+        console.log('Error en promesita', e);
+    }
+    console.log('Fin');
+};
+ejecutarCodigoSyncrono();
+/*
 const observableDePromesa$ = rxjs.from(promesita());
+
 observableDePromesa$
-    .pipe(map((valor) => {
-    return {
-        data: valor
-    };
-}))
-    .subscribe((objetoFeliz) => {
-    console.log(objetoFeliz);
-}, (error) => {
-    console.log(error);
-});
+    .pipe(
+        map(
+            (valor) => {
+                return {
+                    data: valor
+                }
+            }
+        )
+    )
+    .subscribe(
+        (objetoFeliz) => {
+            console.log(objetoFeliz);
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
+
+ */ 
