@@ -15,10 +15,30 @@ observableUno$
         data: valor
     };
 }))
+    .pipe()
+    .pipe()
     .subscribe((ok) => {
     console.log('En ok', ok);
 }, (error) => {
     console.log(error);
 }, () => {
     console.log('Completado');
+});
+const promesita = () => {
+    // @ts-ignore
+    return new Promise((resolve, reject) => {
+        reject(':(');
+    });
+};
+const observableDePromesa$ = rxjs.from(promesita());
+observableDePromesa$
+    .pipe(map((valor) => {
+    return {
+        data: valor
+    };
+}))
+    .subscribe((objetoFeliz) => {
+    console.log(objetoFeliz);
+}, (error) => {
+    console.log(error);
 });

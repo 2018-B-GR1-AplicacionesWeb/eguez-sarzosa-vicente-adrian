@@ -59,7 +59,7 @@ const promesita = () => {
     // @ts-ignore
     return new Promise(
         (resolve, reject) => {
-            resolve(':)');
+            reject(':(');
         }
     )
 };
