@@ -4,9 +4,17 @@
 // import {Observable} from "rxjs";
 // declare var module:any;
 const rxjs = require('rxjs');
-const observableUno$ = rxjs.of(1, 2, 3, 4, 5, 6, 7);
+const map = require('rxjs/operators').map;
+const disctinct = require('rxjs/operators').distinct;
+const observableUno$ = rxjs.of([1, 2, 3], 3, 'Hola', 3, true, 3, { nombre: 'Adrian' }, new Date(), 3);
 console.log(observableUno$);
 observableUno$
+    .pipe(disctinct(), map((valor) => {
+    console.log('Valor', valor);
+    return {
+        data: valor
+    };
+}))
     .subscribe((ok) => {
     console.log('En ok', ok);
 }, (error) => {
