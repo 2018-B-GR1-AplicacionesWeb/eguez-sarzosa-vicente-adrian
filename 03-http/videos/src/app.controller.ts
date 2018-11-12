@@ -1,5 +1,6 @@
-import {Get, Controller, HttpCode, InternalServerErrorException} from '@nestjs/common';
+import {Get, Controller, HttpCode, InternalServerErrorException, Post, Query, Param} from '@nestjs/common';
 import {AppService} from './app.service';
+import {Observable, of} from "rxjs";
 
 @Controller()  //decoradores
 export class AppController {
@@ -8,13 +9,29 @@ export class AppController {
 
     @Get() // http://ip:puerto
     @HttpCode(204) // status
-    raiz(): string {
-        return 'Hola Mundo';
+    raiz(
+        @Query() todosQueryParams: any,
+        @Query('nombre') nombre: string,
+    ): string {
+        console.log(todosQueryParams);
+        return 'Hola Mundo' + nombre;
+    }
+
+    @Get('segmentoUno/segmentoDos/:idUsuario')
+    parametroRuta(
+        @Param('idUsuario') id
+    ) {
+        return id;
     }
 
     @Get('adiosMundo') // url
     adiosMundo(): string {
         return 'Adios Mundo';
+    }
+
+    @Post('adiosMundo') // url
+    adiosMundoPOST(): string {
+        return 'Adios Mundo POST';
     }
 
     @Get('adiosMundoPromesa') // url
@@ -48,6 +65,12 @@ export class AppController {
             throw new InternalServerErrorException({mensaje: 'Error servidor'})
         }
 
+    }
+
+    @Get('adiosMundoObservable') // url
+    adiosMundoObservable(): Observable<string> {
+        const respuesta$ = of('Adios Mundo');
+        return respuesta$;
     }
 
 
