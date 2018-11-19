@@ -3,6 +3,7 @@ declare var Promise;
 const inquirer = require('inquirer');
 const fs = require('fs');
 const rxjs = require('rxjs');
+const mergeMap = require('rxjs/operators').mergeMap;
 
 const preguntaMenu = {
     type: 'list',
@@ -83,6 +84,19 @@ async function main() {
 }
 
 function inicializarBase() {
+
+    const leerBDD$ = rxjs.from(leerBDD());
+
+    leerBDD$
+        .pipe(
+            mergeMap(
+                (respuestaLeerBDD:) => {
+                }
+            )
+        )
+
+
+    /*
     return new Promise(
         (resolve, reject) => {
             fs.readFile('bdd.json', 'utf-8',
@@ -104,6 +118,7 @@ function inicializarBase() {
                 });
         }
     );
+    */
 }
 
 
@@ -253,3 +268,26 @@ function buscarUsuarioPorNombre(nombre) {
 }
 
 main();
+
+
+interface RespuestaBDD {
+    mensaje: string,
+    bdd: BaseDeDatos
+}
+
+interface BaseDeDatos {
+    usuarios: Usuario[];
+    mascotas: Mascota[];
+}
+
+interface Usuario {
+    id: number;
+    nombre: string;
+}
+
+interface Mascota {
+    id: number;
+    nombre: string;
+    idUsuario: number;
+    c
+}
