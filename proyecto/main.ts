@@ -2,6 +2,7 @@ declare var Promise;
 
 const inquirer = require('inquirer');
 const fs = require('fs');
+const rxjs = require('rxjs');
 
 const preguntaMenu = {
     type: 'list',
@@ -97,7 +98,6 @@ function inicializarBase() {
                             });
 
 
-
                     } else {
                         resolve({mensaje: 'ok'});
                     }
@@ -105,6 +105,59 @@ function inicializarBase() {
         }
     );
 }
+
+
+function leerBDD() {
+    return new Promise(
+        (resolve) => {
+            fs.readFile(
+                'bdd.json',
+                'utf-8',
+                (error, contenidoLeido) => {
+                    if (error) {
+                        resolve({
+                            mensaje: 'Base de datos vacia',
+                            bdd: null
+                        });
+                    } else {
+                        resolve({
+                            mensaje: 'Si existe la Base',
+                            bdd: JSON.parse(contenidoLeido)
+                        });
+                    }
+
+                }
+            );
+        }
+    );
+}
+
+function crearBDD() {
+    const contenidoInicialBDD = '{"usuarios":[],"mascotas":[]}';
+    return new Promise(
+        (resolve, reject) => {
+            fs.writeFile(
+                'bdd.json',
+                contenidoInicialBDD,
+                (err) => {
+                    if (err) {
+                        reject({
+                            mensaje: 'Error creando Base',
+                            error: 500
+                        });
+                    } else {
+                        resolve({
+                            mensaje: 'BDD creada'
+                        });
+                    }
+
+                }
+            )
+
+        }
+    )
+}
+
 
 function anadirUsuario(usuario) {
     return new Promise(
