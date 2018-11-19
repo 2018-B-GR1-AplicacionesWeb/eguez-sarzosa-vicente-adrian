@@ -87,13 +87,20 @@ function inicializarBase() {
 
     const leerBDD$ = rxjs.from(leerBDD());
 
-    leerBDD$
+    return leerBDD$
         .pipe(
             mergeMap(
-                (respuestaLeerBDD:) => {
+                (respuestaLeerBDD: RespuestaBDD) => {
+                    if (respuestaLeerBDD.bdd) {
+                        // truty / {}
+                        return rxjs.of(respuestaLeerBDD)
+                    } else {
+                        // falsy / null
+                        return rxjs.from(crearBDD())
+                    }
                 }
             )
-        )
+        );
 
 
     /*
@@ -122,7 +129,7 @@ function inicializarBase() {
 }
 
 
-function leerBDD() {
+function leerBDD(): Promise<RespuestaBDD> {
     return new Promise(
         (resolve) => {
             fs.readFile(
@@ -289,5 +296,4 @@ interface Mascota {
     id: number;
     nombre: string;
     idUsuario: number;
-    c
 }
