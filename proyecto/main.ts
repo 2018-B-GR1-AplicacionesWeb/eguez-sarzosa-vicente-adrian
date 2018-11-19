@@ -1,9 +1,8 @@
-declare var Promise;
-
 const inquirer = require('inquirer');
 const fs = require('fs');
 const rxjs = require('rxjs');
 const mergeMap = require('rxjs/operators').mergeMap;
+const map = require('rxjs/operators').map;
 
 const preguntaMenu = {
     type: 'list',
@@ -47,41 +46,133 @@ const preguntaUsuarioNuevoNombre = [
     }
 ];
 
-async function main() {
+function main() {
     console.log('Empezo');
-    try {
-        await inicializarBase();
-        const respuesta = await inquirer.prompt(preguntaMenu);
-        switch (respuesta.opcionMenu) {
-            case 'Crear':
 
-                const respuestaUsuario = await inquirer.prompt(preguntaUsuario);
-                await anadirUsuario(respuestaUsuario);
+    inicializarBase()
+        .pipe(
+            preguntarOpcion(), // dependiendo de la opcion PREGUNTAMOS DEPENDIENDO LAS OPCIONES
+        )
+        .pipe(
+            mergeMap(
+                (respuesta: RespuestaUsuario) => {
+                    console.log(respuesta);
+                    switch (respuesta.respuestaUsuario.opcionMenu) {
+                        case 'Crear':
+                            return rxjs
+                                .from(inquirer.prompt(preguntaUsuario))
+                                .pipe(
+                                    map(
+                                        (usuario) => {
+                                            respuesta.usuario = usuario;
+                                            return respuesta
+                                        }
+                                    )
+                                )
+                                .catch(
+
+                                );
+
+                        default:
+                            respuesta.usuario = {
+                                id: null,
+                                nombre: null
+                            };
+                            rxjs.of(respuesta)
+
+                    }
+                }
+            )
+        )
+        .pipe(
+             // Ejecutar Accion
+            map(
+                (respuesta: RespuestaUsuario) => {
+                    console.log('respuesta en accion', respuesta);
+                    switch (respuesta.respuestaUsuario.opcionMenu) {
+                        case 'Crear':
+                            const usuario = respuesta.usuario;
+                            respuesta.respuestaBDD.bdd.usuarios.push(usuario)
+                            return respuesta;
+
+                    }
+                }
+            ), // Guardar Base de Datos
+
+        )
+        .pipe(
+            mergeMap(
+                (respuesta: RespuestaUsuario) => {
+                    return guardarBase(respuesta.respuestaBDD.bdd);
+                }
+            )
+        )
+        .subscribe(
+            (mensaje) => {
+                console.log(mensaje);
+            },
+            (error) => {
+                console.log(error);
+            }, () => {
+                console.log('Completado');
+                main();
+            }
+        )
+
+
+    /*
+    const respuesta = await inquirer.prompt(preguntaMenu);
+    switch (respuesta.opcionMenu) {
+        case 'Crear':
+
+            const respuestaUsuario = await inquirer.prompt(preguntaUsuario);
+            await anadirUsuario(respuestaUsuario);
+            main();
+            break;
+
+        case 'Actualizar':
+
+            const respuestaUsuarioBusquedaPorNombre = await inquirer.prompt(preguntaUsuarioBusquedaPorNombre);
+
+            const existeUsuario = await buscarUsuarioPorNombre(respuestaUsuarioBusquedaPorNombre.nombre);
+
+            if (existeUsuario) {
+                const respuestaNuevoNombre = await inquirer.prompt(preguntaUsuarioNuevoNombre);
+                await editarUsuario(respuestaUsuarioBusquedaPorNombre.nombre, respuestaNuevoNombre.nombre);
+            } else {
+                console.log('El usuario no existe');
+
                 main();
                 break;
-
-            case 'Actualizar':
-
-                const respuestaUsuarioBusquedaPorNombre = await inquirer.prompt(preguntaUsuarioBusquedaPorNombre);
-
-                const existeUsuario = await buscarUsuarioPorNombre(respuestaUsuarioBusquedaPorNombre.nombre);
-
-                if (existeUsuario) {
-                    const respuestaNuevoNombre = await inquirer.prompt(preguntaUsuarioNuevoNombre);
-                    await editarUsuario(respuestaUsuarioBusquedaPorNombre.nombre, respuestaNuevoNombre.nombre);
-                } else {
-                    console.log('El usuario no existe');
-
-                    main();
-                    break;
-                }
+            }
 
 
-        }
-    } catch (e) {
-        console.log('Hubo un error');
     }
+    */
+
 }
+
+
+function preguntarOpcion(){
+    return mergeMap( // preguntar opcion
+        (respuestaBDD: RespuestaBDD) => {
+            return preguntarMenu()
+                .pipe(
+                    map(
+                        (respuesta: OpcionesPregunta) => {
+                            return {
+                                respuestaUsuario: respuesta,
+                                respuestaBDD
+                            }
+
+                        }
+                    )
+                )
+        }
+    )
+}
+
+
 
 function inicializarBase() {
 
@@ -129,6 +220,11 @@ function inicializarBase() {
 }
 
 
+function preguntarMenu() {
+    return rxjs.from(inquirer.prompt(preguntaMenu))
+}
+
+
 function leerBDD(): Promise<RespuestaBDD> {
     return new Promise(
         (resolve) => {
@@ -169,7 +265,8 @@ function crearBDD() {
                         });
                     } else {
                         resolve({
-                            mensaje: 'BDD creada'
+                            mensaje: 'BDD creada',
+                            bdd: JSON.parse('{"usuarios":[],"mascotas":[]}')
                         });
                     }
 
@@ -178,6 +275,29 @@ function crearBDD() {
 
         }
     )
+}
+
+function guardarBase(bdd: BaseDeDatos) {
+    return new Promise(
+        (resolve, reject) => {
+            fs.writeFile(
+                'bdd.json',
+                JSON.stringify(bdd),
+                (err) => {
+                    if (err) {
+                        reject({
+                            mensaje: 'Error guardando BDD',
+                            error: 500
+                        })
+                    } else {
+                        resolve({
+                            mensaje: 'BDD guardada'
+                        })
+                    }
+                }
+            )
+        }
+    );
 }
 
 
@@ -297,3 +417,25 @@ interface Mascota {
     nombre: string;
     idUsuario: number;
 }
+
+interface OpcionesPregunta {
+    opcionMenu: 'Crear' | 'Borrar' | 'Buscar' | 'Actualizar'
+}
+
+interface RespuestaUsuario {
+    respuestaUsuario: OpcionesPregunta,
+    respuestaBDD: RespuestaBDD
+    usuario?: Usuario
+}
+
+
+
+
+
+
+
+
+
+
+
+
