@@ -51,9 +51,22 @@ function main() {
 
     inicializarBase()
         .pipe(
-            preguntarOpcion(), // dependiendo de la opcion PREGUNTAMOS DEPENDIENDO LAS OPCIONES
-        )
-        .pipe(
+            mergeMap( // preguntar opcion
+                (respuestaBDD: RespuestaBDD) => {
+                    return preguntarMenu()
+                        .pipe(
+                            map(
+                                (respuesta: OpcionesPregunta) => {
+                                    return {
+                                        respuestaUsuario: respuesta,
+                                        respuestaBDD
+                                    }
+
+                                }
+                            )
+                        )
+                }
+            ), // dependiendo de la opcion PREGUNTAMOS DEPENDIENDO LAS OPCIONES
             mergeMap(
                 (respuesta: RespuestaUsuario) => {
                     console.log(respuesta);
@@ -68,9 +81,6 @@ function main() {
                                             return respuesta
                                         }
                                     )
-                                )
-                                .catch(
-
                                 );
 
                         default:
@@ -82,10 +92,7 @@ function main() {
 
                     }
                 }
-            )
-        )
-        .pipe(
-             // Ejecutar Accion
+            ), // Ejecutar Accion
             map(
                 (respuesta: RespuestaUsuario) => {
                     console.log('respuesta en accion', respuesta);
@@ -98,9 +105,6 @@ function main() {
                     }
                 }
             ), // Guardar Base de Datos
-
-        )
-        .pipe(
             mergeMap(
                 (respuesta: RespuestaUsuario) => {
                     return guardarBase(respuesta.respuestaBDD.bdd);
@@ -151,28 +155,6 @@ function main() {
     */
 
 }
-
-
-function preguntarOpcion(){
-    return mergeMap( // preguntar opcion
-        (respuestaBDD: RespuestaBDD) => {
-            return preguntarMenu()
-                .pipe(
-                    map(
-                        (respuesta: OpcionesPregunta) => {
-                            return {
-                                respuestaUsuario: respuesta,
-                                respuestaBDD
-                            }
-
-                        }
-                    )
-                )
-        }
-    )
-}
-
-
 
 function inicializarBase() {
 
