@@ -7,7 +7,12 @@ import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    app.use(cookieParser());
+    app.use(cookieParser(
+        'me gustan los tacos', // secreto
+        {  // opciones
+
+        }
+    ));
     await app.listen(3000);
 }
 
