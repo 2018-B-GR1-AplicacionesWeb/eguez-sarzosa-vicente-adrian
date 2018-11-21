@@ -207,7 +207,7 @@ function preguntarMenu() {
 }
 
 
-function leerBDD(): Promise<RespuestaBDD> {
+function leerBDD(){
     return new Promise(
         (resolve) => {
             fs.readFile(
