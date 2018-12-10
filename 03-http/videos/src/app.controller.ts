@@ -46,12 +46,38 @@ export class AppController {
 
     @Get('adiosMundo') // url
     adiosMundo(): string {
-        return 'Adios Mundo';
+        return 'Adios mundo'
     }
 
     @Post('adiosMundo') // url
-    adiosMundoPOST(): string {
-        return 'Adios Mundo POST';
+    adiosMundoPOST(
+        @Res() response,
+    ) {
+        response.render(
+            'inicio',
+            {
+                usuario: 'Adrian',
+                arreglo: [
+                    {
+                        titulo:'A',
+                        descripcion:'asd asd asd asd asd '
+                    },
+                    {
+                        titulo:'B',
+                        descripcion:'asd asd asd asd asd '
+                    },
+                    {
+                        titulo:'C',
+                        descripcion:'asd asd asd asd asd '
+                    },
+                    {
+                        titulo:'D',
+                        descripcion:'asd asd asd asd asd '
+                    }
+                ],
+                booleano: true,
+            }
+        );
     }
 
     @Get('adiosMundoPromesa') // url
@@ -130,6 +156,34 @@ export class AppController {
         }
 
 
+    }
+
+
+    @Get('inicio')
+    inicio(
+        @Res() response,
+    ) {
+        response.render(
+            'inicio',
+            {
+                usuario: 'Adrian',
+                arreglo: [
+                    {
+                        titulo:'A',
+                        descripcion:'asd asd asd asd asd '
+                    },
+                    {
+                        titulo:'B',
+                        descripcion:'asd asd asd asd asd '
+                    },
+                    {
+                        titulo:'C',
+                        descripcion:'asd asd asd asd asd '
+                    }
+                ],
+                booleano: false,
+            }
+        );
     }
 
 
