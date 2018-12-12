@@ -19,28 +19,7 @@ import {Request, Response} from "express";
 // http://localhost:3000/usuario
 export class AppController {
 
-    arreglo = [
-        {
-            id: 1,
-            titulo: 'A',
-            descripcion: 'Descripcion de a'
-        },
-        {
-            id: 2,
-            titulo: 'B',
-            descripcion: 'Descripcion de b '
-        },
-        {
-            id: 3,
-            titulo: 'C',
-            descripcion: 'Descripcion de c '
-        },
-        {
-            id: 4,
-            titulo: 'D',
-            descripcion: 'Descripcion de d'
-        }
-    ]
+
 
     // public servicio:AppService;
     constructor(private readonly _appService: AppService) {  // NO ES UN CONSTRUCTOR
@@ -185,23 +164,31 @@ export class AppController {
         @Res() response,
         @Param('idNoticia') idNoticia: string,
     ) {
-        const indiceNoticia = this.arreglo
-            .findIndex(
-                (noticia) => {
-                    return noticia.id === Number(idNoticia)
-                }
-            );
-        this.arreglo.splice(indiceNoticia, 1);
+
 
         response.redirect('/inicio')
     }
 
     @Get('crear-noticia')
-    crearNoticia(
+    crearNoticiaRuta(
         @Res() response
     ) {
         response.render(
             'crear-noticia'
+        )
+    }
+
+    @Post('crear-noticia')
+    crearNoticiaFuncion(
+        @Res() response,
+        @Body() noticia: Noticia
+    ) {
+        noticia.id = this.numeroRegistro;
+        this.numeroRegistro++;
+        this.arreglo.push(noticia);
+
+        response.redirect(
+            '/inicio'
         )
     }
 
@@ -212,6 +199,13 @@ export class AppController {
 export interface Usuario {
     nombre: string;
 }
+
+export interface Noticia {
+    id?: number;
+    titulo: string;
+    descripcion: string;
+}
+
 
 // http://localhost:3000
 
