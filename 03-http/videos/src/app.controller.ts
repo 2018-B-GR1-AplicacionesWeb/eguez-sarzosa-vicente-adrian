@@ -187,13 +187,22 @@ export class AppController {
     ) {
         const indiceNoticia = this.arreglo
             .findIndex(
-                (noticia)=>{
+                (noticia) => {
                     return noticia.id === Number(idNoticia)
                 }
             );
-        this.arreglo.splice(indiceNoticia,1);
+        this.arreglo.splice(indiceNoticia, 1);
 
         response.redirect('/inicio')
+    }
+
+    @Get('crear-noticia')
+    crearNoticia(
+        @Res() response
+    ) {
+        response.render(
+            'crear-noticia'
+        )
     }
 
 
