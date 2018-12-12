@@ -180,6 +180,22 @@ export class AppController {
         );
     }
 
+    @Post('eliminar/:idNoticia')
+    eliminar(
+        @Res() response,
+        @Param('idNoticia') idNoticia: string,
+    ) {
+        const indiceNoticia = this.arreglo
+            .findIndex(
+                (noticia)=>{
+                    return noticia.id === Number(idNoticia)
+                }
+            );
+        this.arreglo.splice(indiceNoticia,1);
+
+        response.redirect('/inicio')
+    }
+
 
 }
 

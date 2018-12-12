@@ -54,7 +54,7 @@
             <td><%= noticia.titulo %></td>
             <td><%= noticia.descripcion %></td>
             <td>
-                <form action="/adiosMundo" method="POST">
+                <form action="/eliminar/<%= noticia.id %>" method="POST">
                     <button type="button"> clickea sin problemas</button>
                     <button>Yo tambien envio informacion</button>
                     <button type="submit"> Enviar</button>
