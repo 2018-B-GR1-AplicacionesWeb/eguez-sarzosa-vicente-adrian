@@ -1,3 +1,10 @@
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
 
 <!-- h1 -> header 1  -->
 <h1> <%= usuario %> </h1>
@@ -5,7 +12,7 @@
 <!-- h2 -> header 2  -->
 <h2>  <%= vicente %>  </h2>
 
-<% if(booleano) {%>
+<% if(booleano) { %>
     <!-- p -> parrafo  -->
     <p>Usted creo una noticia</p>
 <% } %>
@@ -41,12 +48,20 @@
         <th>Acciones</th>
     </tr>
     <!-- tr -> table row -->
-    <tr>
-        <!-- td -> table detail -->
-        <td>1</td>
-        <td>Adrian</td>
-        <td><button>Eliminar</button></td>
-    </tr>
+    <% arreglo.forEach( (noticia)=> { %>
+        <tr>
+            <!-- td -> table detail -->
+            <td><%= noticia.id %></td>
+            <td><%= noticia.nombre %></td>
+            <td>
+                <form action="/adiosMundo" method="POST">
+                    <button type="button"> clickea sin problemas</button>
+                    <button>Yo tambien envio informacion</button>
+                    <button type="submit"> Enviar</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
 </table>
 
 
