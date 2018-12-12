@@ -51,8 +51,8 @@
     <% arreglo.forEach( (noticia)=> { %>
         <tr>
             <!-- td -> table detail -->
-            <td><%= noticia.id %></td>
-            <td><%= noticia.nombre %></td>
+            <td><%= noticia.titulo %></td>
+            <td><%= noticia.descripcion %></td>
             <td>
                 <form action="/adiosMundo" method="POST">
                     <button type="button"> clickea sin problemas</button>

@@ -18,6 +18,30 @@ import {Request, Response} from "express";
 // Controller('usuario')
 // http://localhost:3000/usuario
 export class AppController {
+
+    arreglo = [
+        {
+            id: 1,
+            titulo: 'A',
+            descripcion: 'Descripcion de a'
+        },
+        {
+            id: 2,
+            titulo: 'B',
+            descripcion: 'Descripcion de b '
+        },
+        {
+            id: 3,
+            titulo: 'C',
+            descripcion: 'Descripcion de c '
+        },
+        {
+            id: 4,
+            titulo: 'D',
+            descripcion: 'Descripcion de d'
+        }
+    ]
+
     // public servicio:AppService;
     constructor(private readonly _appService: AppService) {  // NO ES UN CONSTRUCTOR
         // this.servicio = servicio;
@@ -57,24 +81,7 @@ export class AppController {
             'inicio',
             {
                 usuario: 'Adrian',
-                arreglo: [
-                    {
-                        titulo:'A',
-                        descripcion:'asd asd asd asd asd '
-                    },
-                    {
-                        titulo:'B',
-                        descripcion:'asd asd asd asd asd '
-                    },
-                    {
-                        titulo:'C',
-                        descripcion:'asd asd asd asd asd '
-                    },
-                    {
-                        titulo:'D',
-                        descripcion:'asd asd asd asd asd '
-                    }
-                ],
+                arreglo: [],
                 booleano: true,
             }
         );
@@ -167,20 +174,7 @@ export class AppController {
             'inicio',
             {
                 usuario: 'Adrian',
-                arreglo: [
-                    {
-                        titulo:'A',
-                        descripcion:'asd asd asd asd asd '
-                    },
-                    {
-                        titulo:'B',
-                        descripcion:'asd asd asd asd asd '
-                    },
-                    {
-                        titulo:'C',
-                        descripcion:'asd asd asd asd asd '
-                    }
-                ],
+                arreglo: this.arreglo,
                 booleano: false,
             }
         );
