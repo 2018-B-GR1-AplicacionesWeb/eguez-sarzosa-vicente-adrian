@@ -13,6 +13,7 @@ import {
 import {AppService} from './app.service';
 import {Observable, of} from "rxjs";
 import {Request, Response} from "express";
+import {NoticiaService} from "./noticia.service";
 
 @Controller()  //decoradores
 // Controller('usuario')
@@ -20,9 +21,9 @@ import {Request, Response} from "express";
 export class AppController {
 
 
-
     // public servicio:AppService;
-    constructor(private readonly _appService: AppService) {  // NO ES UN CONSTRUCTOR
+    constructor(private readonly _appService: AppService,
+                private readonly _noticiaService: NoticiaService) {  // NO ES UN CONSTRUCTOR
         // this.servicio = servicio;
     }
 
@@ -153,7 +154,7 @@ export class AppController {
             'inicio',
             {
                 usuario: 'Adrian',
-                arreglo: this.arreglo,
+                arreglo: this._noticiaService.arreglo, // AQUI!
                 booleano: false,
             }
         );
@@ -164,8 +165,7 @@ export class AppController {
         @Res() response,
         @Param('idNoticia') idNoticia: string,
     ) {
-
-
+        this._noticiaService.eliminar(Number(idNoticia));
         response.redirect('/inicio')
     }
 
@@ -183,9 +183,7 @@ export class AppController {
         @Res() response,
         @Body() noticia: Noticia
     ) {
-        noticia.id = this.numeroRegistro;
-        this.numeroRegistro++;
-        this.arreglo.push(noticia);
+        this._noticiaService.crear(noticia)
 
         response.redirect(
             '/inicio'
