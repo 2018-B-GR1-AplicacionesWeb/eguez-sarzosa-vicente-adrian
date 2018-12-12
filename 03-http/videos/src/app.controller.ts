@@ -183,7 +183,7 @@ export class AppController {
         @Res() response,
         @Body() noticia: Noticia
     ) {
-        this._noticiaService.crear(noticia)
+        this._noticiaService.crear(noticia);
 
         response.redirect(
             '/inicio'

@@ -59,6 +59,4 @@ export class NoticiaService {
         return this.arreglo[indiceNoticia]
     }
 
-
-
 }
