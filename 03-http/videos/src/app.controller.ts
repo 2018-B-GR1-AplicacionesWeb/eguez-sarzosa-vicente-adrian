@@ -190,6 +190,27 @@ export class AppController {
         )
     }
 
+    @Get('actualizar-noticia/:idNoticia')
+    actualizarNoticiaVista(
+        @Res() response,
+        @Param('idNoticia') idNoticia: string,
+    ) {
+        // El "+" le transforma en numero a un string
+        // numerico
+        const noticiaEncontrada = this._noticiaService
+            .buscarPorId(+idNoticia);
+
+        response
+            .render(
+                'crear-noticia',
+                {
+                    noticia: noticiaEncontrada
+                }
+            )
+
+
+    }
+
 
 }
 
