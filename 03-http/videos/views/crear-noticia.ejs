@@ -6,7 +6,7 @@
 <p><%= estaCreando ? 'Cree':'Actualice' %> una noticia</p>
 
 <!-- emmet -->
-<form action="/crear-noticia"
+<form action="/<%= estaCreando ? 'crear' : 'actualizar' %>-noticia/"<%= estaCreando ? '' : noticia.id %>
       method="POST">
 
     <div>
@@ -28,7 +28,7 @@
         </textarea>
     </div>
 
-    <button>Crear noticia</button>
+    <button><%= estaCreando ? 'Crear' : 'Actualizar' %> noticia</button>
 
 </form>
 
