@@ -211,6 +211,18 @@ export class AppController {
 
     }
 
+    @Post('actualizar-noticia/:idNoticia')
+    actualizarNoticiaMetedo(
+        @Res() response,
+        @Param('idNoticia') idNoticia: string,
+        @Body() noticia: Noticia
+    ) {
+        noticia.id = +idNoticia;
+        this._noticiaService.actualizar(+idNoticia, noticia);
+
+        response.redirect('/inicio');
+
+    }
 
 }
 
