@@ -149,13 +149,24 @@ export class AppController {
     @Get('inicio')
     inicio(
         @Res() response,
+        @Query('accion') accion: string,
+        @Query('titulo') titulo: string
     ) {
+        let mensaje = undefined;
+        if (accion && titulo) {
+            switch (accion) {
+                case 'borrar':
+                    mensaje = `Registro ${titulo} eliminado`;
+            }
+        }
+
         response.render(
             'inicio',
             {
                 usuario: 'Adrian',
                 arreglo: this._noticiaService.arreglo, // AQUI!
                 booleano: false,
+                mensaje: mensaje
             }
         );
     }
@@ -165,8 +176,15 @@ export class AppController {
         @Res() response,
         @Param('idNoticia') idNoticia: string,
     ) {
-        this._noticiaService.eliminar(Number(idNoticia));
-        response.redirect('/inicio')
+
+        const noticiaBorrada = this._noticiaService
+            .eliminar(Number(idNoticia));
+
+        const parametrosConsulta = `?accion=borrar&titulo=${
+            noticiaBorrada.titulo
+            }`;
+
+        response.redirect('/inicio' + parametrosConsulta)
     }
 
     @Get('crear-noticia')
