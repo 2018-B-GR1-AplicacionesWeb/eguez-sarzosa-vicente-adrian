@@ -1,9 +1,16 @@
+<% const existeMensaje = typeof mensaje !== "undefined" %>
+
+
 <style>
     table, th, td {
         border: 1px solid black;
         border-collapse: collapse;
     }
 </style>
+
+<% if(existeMensaje){ %>
+    <p>MENSAJE: <%= mensaje %></p>
+<% } %>
 
 
 <!-- h1 -> header 1  -->
@@ -21,6 +28,15 @@
 <!-- ol -> ordered list  -->
 
 <!-- a -> anchor -->
+
+<form onsubmit="imprimirEnConsola()">
+
+    <label for="busqueda">Busqueda</label>
+    <input id="busqueda" type="text">
+
+    <button>Buscar</button>
+
+</form>
 
 <a href="/crear-noticia">
     <button>Crear noticia</button>
@@ -47,13 +63,23 @@
                     -->
                     <button type="submit"> Eliminar</button>
                 </form>
+                <a href="/actualizar-noticia/<%= noticia.id %>">
+                    <button>Actualizar</button>
+                </a>
+
+
             </td>
         </tr>
     <% }) %>
 </table>
 
 
-
+<script>
+    function imprimirEnConsola(evento){
+        evento.preventDefault();
+        console.log('ASDASDAS');
+    }
+</script>
 
 
 
