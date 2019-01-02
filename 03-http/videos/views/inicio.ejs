@@ -29,6 +29,15 @@
 
 <!-- a -> anchor -->
 
+<form onsubmit="imprimirEnConsola()">
+
+    <label for="busqueda">Busqueda</label>
+    <input id="busqueda" type="text">
+
+    <button>Buscar</button>
+
+</form>
+
 <a href="/crear-noticia">
     <button>Crear noticia</button>
 </a>
@@ -65,7 +74,12 @@
 </table>
 
 
-
+<script>
+    function imprimirEnConsola(evento){
+        evento.preventDefault();
+        console.log('ASDASDAS');
+    }
+</script>
 
 
 

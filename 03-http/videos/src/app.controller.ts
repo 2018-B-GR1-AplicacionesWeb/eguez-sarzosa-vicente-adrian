@@ -149,10 +149,15 @@ export class AppController {
     @Get('inicio')
     inicio(
         @Res() response,
+        @Query() consulta,
         @Query('accion') accion: string,
         @Query('titulo') titulo: string
     ) {
+
+        console.log(consulta);
+
         let mensaje = undefined;
+
         if (accion && titulo) {
             switch (accion) {
                 case 'borrar':
