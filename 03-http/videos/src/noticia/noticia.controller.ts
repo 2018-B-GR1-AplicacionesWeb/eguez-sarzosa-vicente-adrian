@@ -42,16 +42,17 @@ export class NoticiaController {
     }
 
     @Post('eliminar/:idNoticia')
-    eliminar(
+    async eliminar(
         @Res() response,
         @Param('idNoticia') idNoticia: string,
     ) {
 
-        const noticiaBorrada = this._noticiaService
-            .eliminar(Number(idNoticia));
+        const noticia = await this._noticiaService.buscarPorId(+idNoticia);
+
+        await this._noticiaService.eliminar(Number(idNoticia));
 
         const parametrosConsulta = `?accion=borrar&titulo=${
-            noticiaBorrada.titulo
+            noticia.titulo
             }`;
 
         response.redirect('/noticia/inicio' + parametrosConsulta)
