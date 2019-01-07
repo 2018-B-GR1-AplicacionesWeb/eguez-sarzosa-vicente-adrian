@@ -1,5 +1,9 @@
 import {Injectable} from "@nestjs/common";
 import {Noticia} from "../app.controller";
+import {NoticiaEntity} from "./noticia-entity";
+
+import {FindManyOptions, Repository} from "typeorm";
+import {InjectRepository} from '@nestjs/typeorm';
 
 @Injectable()
 export class NoticiaService {
@@ -27,11 +31,26 @@ export class NoticiaService {
     ];
     numeroRegistro = 5;
 
-    crear(noticia: Noticia): Noticia {
-        noticia.id = this.numeroRegistro;
-        this.numeroRegistro++;
-        this.arreglo.push(noticia);
-        return noticia;
+    constructor(
+        @InjectRepository(NoticiaEntity)
+        private readonly _noticiaRepository: Repository<NoticiaEntity>,
+    ) {
+    }
+
+    buscar(parametrosBusqueda?: FindManyOptions<NoticiaEntity>)
+        : Promise<NoticiaEntity[]> {
+        return this._noticiaRepository.find(parametrosBusqueda);
+    }
+
+    crear(noticia: Noticia): Promise<NoticiaEntity> {
+
+        // Metodo Create es como un CONSTRUCTOR de la ENTIDAD
+        const noticiaEntity: NoticiaEntity = this._noticiaRepository
+            .create(noticia);
+
+        // Metodo Save Guarda en la BDD
+        return this._noticiaRepository.save(noticiaEntity);
+
     }
 
     eliminar(idNoticia: number): Noticia {
@@ -47,27 +66,17 @@ export class NoticiaService {
         return registroEliminado;
     }
 
-    actualizar(idNoticia: number, nuevaNoticia: Noticia): Noticia {
-        const indiceNoticia = this.arreglo
-            .findIndex(
-                (noticia) => {
-                    return noticia.id === idNoticia
-                }
-            );
-        this.arreglo[indiceNoticia] = nuevaNoticia;
+    actualizar(nuevaNoticia: Noticia): Promise<NoticiaEntity> {
 
-        return this.arreglo[indiceNoticia]
+        const noticiaEntity: NoticiaEntity = this._noticiaRepository
+            .create(nuevaNoticia);
+
+        return this._noticiaRepository.save(noticiaEntity);
+
     }
 
-
-    buscarPorId(idNoticia: number): Noticia {
-        const indiceNoticia = this.arreglo
-            .findIndex(
-                (noticia) => {
-                    return noticia.id === idNoticia
-                }
-            );
-        return this.arreglo[indiceNoticia];
+    buscarPorId(idNoticia: number): Promise<NoticiaEntity> {
+        return this._noticiaRepository.findOne(idNoticia);
     }
 
 

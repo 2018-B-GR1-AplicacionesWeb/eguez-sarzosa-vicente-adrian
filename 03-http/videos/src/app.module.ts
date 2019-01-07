@@ -5,6 +5,7 @@ import {NoticiaService} from "./noticia/noticia.service";
 
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {NoticiaEntity} from "./noticia/noticia-entity";
+import {NoticiaModule} from "./noticia/noticia.module";
 
 @Module({
     imports: [
@@ -17,16 +18,19 @@ import {NoticiaEntity} from "./noticia/noticia-entity";
                 username: 'adrian',
                 password: '12345678',
                 synchronize: true,
+                dropSchema: true,
                 entities: [
                     NoticiaEntity
                 ]
             }
-        )
+        ),
+        NoticiaModule
     ],  // MODULOS
-    controllers: [AppController],  // Controllers
+    controllers: [
+        AppController
+    ],  // Controllers
     providers: [
-        AppService,
-        NoticiaService
+        AppService
     ], // Servicios
 })
 export class AppModule {

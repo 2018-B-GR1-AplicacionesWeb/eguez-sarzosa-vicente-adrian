@@ -12,7 +12,7 @@ export class NoticiaController {
     }
 
     @Get('inicio')
-    inicio(
+    async inicio(
         @Res() response,
         @Query() consulta,
         @Query('accion') accion: string,
@@ -28,11 +28,13 @@ export class NoticiaController {
             }
         }
 
+        const noticias = await this._noticiaService.buscar();
+
         response.render(
             'inicio',
             {
                 usuario: 'Adrian',
-                arreglo: this._noticiaService.arreglo, // AQUI!
+                arreglo: noticias, // AQUI!
                 booleano: false,
                 mensaje: mensaje
             }
@@ -65,11 +67,12 @@ export class NoticiaController {
     }
 
     @Post('crear-noticia')
-    crearNoticiaFuncion(
+    async crearNoticiaFuncion(
         @Res() response,
         @Body() noticia: Noticia
     ) {
-        this._noticiaService.crear(noticia);
+        const respuesta = await this._noticiaService.crear(noticia);
+        console.log(respuesta);
 
         response.redirect(
             '/noticia/inicio'
@@ -77,13 +80,13 @@ export class NoticiaController {
     }
 
     @Get('actualizar-noticia/:idNoticia')
-    actualizarNoticiaVista(
+    async actualizarNoticiaVista(
         @Res() response,
         @Param('idNoticia') idNoticia: string,
     ) {
         // El "+" le transforma en numero a un string
         // numerico
-        const noticiaEncontrada = this._noticiaService
+        const noticiaEncontrada = await this._noticiaService
             .buscarPorId(+idNoticia);
 
         response
@@ -98,15 +101,24 @@ export class NoticiaController {
     }
 
     @Post('actualizar-noticia/:idNoticia')
-    actualizarNoticiaMetedo(
+    async actualizarNoticiaMetedo(
         @Res() response,
         @Param('idNoticia') idNoticia: string,
         @Body() noticia: Noticia
     ) {
         noticia.id = +idNoticia;
-        this._noticiaService.actualizar(+idNoticia, noticia);
+        await this._noticiaService.actualizar(noticia);
 
         response.redirect('/noticia/inicio');
 
     }
 }
+
+
+
+
+
+
+
+
+
