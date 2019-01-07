@@ -1,5 +1,9 @@
 import {Injectable} from "@nestjs/common";
 import {Noticia} from "../app.controller";
+import {NoticiaEntity} from "./noticia-entity";
+
+import {FindManyOptions, Repository} from "typeorm";
+import {InjectRepository} from '@nestjs/typeorm';
 
 @Injectable()
 export class NoticiaService {
@@ -27,47 +31,49 @@ export class NoticiaService {
     ];
     numeroRegistro = 5;
 
-    crear(noticia: Noticia): Noticia {
-        noticia.id = this.numeroRegistro;
-        this.numeroRegistro++;
-        this.arreglo.push(noticia);
-        return noticia;
+    constructor(
+        @InjectRepository(NoticiaEntity)
+        private readonly _noticiaRepository: Repository<NoticiaEntity>,
+    ) {
     }
 
-    eliminar(idNoticia: number): Noticia {
-        const indiceNoticia = this.arreglo
-            .findIndex(
-                (noticia) => {
-                    return noticia.id === idNoticia
-                }
-            );
-        const registroEliminado = JSON.parse(JSON.stringify(this.arreglo[indiceNoticia]));
-        this.arreglo.splice(indiceNoticia, 1);
-
-        return registroEliminado;
+    buscar(parametrosBusqueda?: FindManyOptions<NoticiaEntity>)
+        : Promise<NoticiaEntity[]> {
+        return this._noticiaRepository.find(parametrosBusqueda);
     }
 
-    actualizar(idNoticia: number, nuevaNoticia: Noticia): Noticia {
-        const indiceNoticia = this.arreglo
-            .findIndex(
-                (noticia) => {
-                    return noticia.id === idNoticia
-                }
-            );
-        this.arreglo[indiceNoticia] = nuevaNoticia;
+    crear(noticia: Noticia): Promise<NoticiaEntity> {
 
-        return this.arreglo[indiceNoticia]
+        // Metodo Create es como un CONSTRUCTOR de la ENTIDAD
+        const noticiaEntity: NoticiaEntity = this._noticiaRepository
+            .create(noticia);
+
+        // Metodo Save Guarda en la BDD
+        return this._noticiaRepository.save(noticiaEntity);
+
     }
 
+    eliminar(idNoticia: number): Promise<NoticiaEntity> {
 
-    buscarPorId(idNoticia: number): Noticia {
-        const indiceNoticia = this.arreglo
-            .findIndex(
-                (noticia) => {
-                    return noticia.id === idNoticia
-                }
-            );
-        return this.arreglo[indiceNoticia];
+        const noticiaAEliminar: NoticiaEntity = this._noticiaRepository
+            .create({
+                id: idNoticia
+            });
+
+        return this._noticiaRepository.remove(noticiaAEliminar);
+    }
+
+    actualizar(nuevaNoticia: Noticia): Promise<NoticiaEntity> {
+
+        const noticiaEntity: NoticiaEntity = this._noticiaRepository
+            .create(nuevaNoticia);
+
+        return this._noticiaRepository.save(noticiaEntity);
+
+    }
+
+    buscarPorId(idNoticia: number): Promise<NoticiaEntity> {
+        return this._noticiaRepository.findOne(idNoticia);
     }
 
 
