@@ -2,10 +2,14 @@
 
 import {Body, Controller, Get, Param, Post, Query, Res} from "@nestjs/common";
 import {Noticia} from "../app.controller";
+import {NoticiaService} from "./noticia.service";
 
 @Controller('noticia')
 export class NoticiaController {
 
+    constructor(private readonly _noticiaService: NoticiaService) {
+
+    }
 
     @Get('inicio')
     inicio(
@@ -68,7 +72,7 @@ export class NoticiaController {
         this._noticiaService.crear(noticia);
 
         response.redirect(
-            '/inicio'
+            '/noticia/inicio'
         )
     }
 
@@ -102,7 +106,7 @@ export class NoticiaController {
         noticia.id = +idNoticia;
         this._noticiaService.actualizar(+idNoticia, noticia);
 
-        response.redirect('/inicio');
+        response.redirect('/noticia/inicio');
 
     }
 }
