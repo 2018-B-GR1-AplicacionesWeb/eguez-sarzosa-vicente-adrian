@@ -5,6 +5,8 @@ import {AppModule} from './app.module';
 import * as cookieParser from 'cookie-parser';
 import * as ejs from 'ejs';
 import * as session from 'express-session';
+import * as FileSession from 'session-file-store';
+const FileStore = FileSession(session);
 
 
 async function bootstrap() {
@@ -12,11 +14,12 @@ async function bootstrap() {
 
     app.use(
         session({
-            // name: 'server-session-id',
             secret: 'No sera de tomar un traguito',
             resave: false,
             saveUninitialized: true,
-            cookie: {secure: false}
+            cookie: {secure: false},
+            name: 'server-session-id',
+            store: new FileStore()
         })
     );
 

@@ -9,6 +9,7 @@ import {NoticiaModule} from "./noticia/noticia.module";
 import {PaginaEntity} from "./pagina/pagina.entity";
 import {ArticuloEntity} from "./articulo/articulo.entity";
 import {UsuarioEntity} from "./usuario/usuario.entity";
+import {UsuarioModule} from "./usuario/usuario.module";
 
 @Module({
     imports: [
@@ -30,7 +31,9 @@ import {UsuarioEntity} from "./usuario/usuario.entity";
                 ]
             }
         ),
-        NoticiaModule
+        NoticiaModule,
+        UsuarioModule
+        // app.module.ts
     ],  // MODULOS
     controllers: [
         AppController
