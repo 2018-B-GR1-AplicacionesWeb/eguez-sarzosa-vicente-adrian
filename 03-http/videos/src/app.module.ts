@@ -16,8 +16,8 @@ import {UsuarioModule} from "./usuario/usuario.module";
         TypeOrmModule.forRoot(
             {
                 type: 'mysql',
-                host: '172.31.105.224',
-                port: 32771,
+                host: '172.29.65.255',
+                port: 32769,
                 database: 'web',
                 username: 'adrian',
                 password: '12345678',
@@ -44,4 +44,23 @@ import {UsuarioModule} from "./usuario/usuario.module";
 })
 export class AppModule {
 }
+
+// Servidor EJS -> HTML CSS JS -> Pagina web
+
+
+// PUBLICO
+// Servidor Web Estatico -> PDF -> PDF?
+// Servidor Web Estatico -> Imagen -> Imagen?
+
+
+// EXPRESSJS NO NEST
+
+
+
+
+
+
+
+
+
 
