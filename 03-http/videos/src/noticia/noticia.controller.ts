@@ -109,10 +109,11 @@ export class NoticiaController {
         @Body() noticia: Noticia
     ) {
         const respuesta = await this._noticiaService.crear(noticia);
-        console.log(respuesta);
+
+        const parametrosConsulta = `?accion=crear&titulo=${noticia.titulo}`;
 
         response.redirect(
-            '/noticia/inicio'
+            '/noticia/inicio' + parametrosConsulta
         )
     }
 
@@ -146,7 +147,9 @@ export class NoticiaController {
         noticia.id = +idNoticia;
         await this._noticiaService.actualizar(noticia);
 
-        response.redirect('/noticia/inicio');
+        const parametrosConsulta = `?accion=actualizar&titulo=${noticia.titulo}`;
+
+        response.redirect('/noticia/inicio' + parametrosConsulta);
 
     }
 }
