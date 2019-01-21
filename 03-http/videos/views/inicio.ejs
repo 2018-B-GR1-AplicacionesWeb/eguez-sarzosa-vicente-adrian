@@ -17,16 +17,13 @@
 
     <% const existeMensaje = typeof mensaje !== "undefined" %>
 
-
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-    </style>
-
     <% if(existeMensaje){ %>
-        <p>MENSAJE: <%= mensaje %></p>
+
+        <div class="<%= clase %>" role="alert">
+            <span class="font-weight-bold">
+                MENSAJE
+            </span> : <%= mensaje %>
+        </div>
     <% } %>
 
 
@@ -73,7 +70,8 @@
 
         </div>
         <div class="col-sm-3">
-            <a href="/noticia/crear-noticia">
+            <a href="/noticia/crear-noticia"
+               class="quitar-link">
 
                 <button class="btn btn-outline-success btn-block">
 
@@ -85,17 +83,21 @@
         </div>
     </div>
 
+    <h2>Lista de Noticias</h2>
+    <p>Listado de las noticias, actualice o elimine noticias.</p>
 
-
-    <table>
+    <table class="table table-hover">
         <!-- tr -> table row -->
-        <tr>
-            <!-- th -> table header -->
-            <th>Identicador</th>
-            <th>Nombre</th>
-            <th>Acciones</th>
-        </tr>
+        <thead>
+            <tr>
+                <!-- th -> table header -->
+                <th width="30%">Titulo</th>
+                <th width="50%">Descripcion</th>
+                <th width="20%">Acciones</th>
+            </tr>
+        </thead>
         <!-- tr -> table row -->
+        <tbody>
         <% arreglo.forEach( (noticia)=> { %>
             <tr>
                 <!-- td -> table detail -->
@@ -106,16 +108,24 @@
                         <!--<button type="button"> clickea sin problemas</button>
                         <button>Yo tambien envio informacion</button>
                         -->
-                        <button type="submit"> Eliminar</button>
+                        <button class="btn btn-outline-danger btn-block espaciado-boton"
+                                type="submit">
+                            Eliminar
+                        </button>
                     </form>
-                    <a href="/noticia/actualizar-noticia/<%= noticia.id %>">
-                        <button>Actualizar</button>
+                    <a  href="/noticia/actualizar-noticia/<%= noticia.id %>"
+                        class="quitar-link">
+                        <button
+                                class="btn btn-outline-info btn-block espaciado-boton">
+                            Actualizar
+                        </button>
                     </a>
 
 
                 </td>
             </tr>
         <% }) %>
+        </tbody>
     </table>
 
 

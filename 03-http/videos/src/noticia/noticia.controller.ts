@@ -22,11 +22,24 @@ export class NoticiaController {
     ) {
 
         let mensaje = undefined;
+        let clase = undefined;
 
         if (accion && titulo) {
             switch (accion) {
                 case 'borrar':
-                    mensaje = `Registro ${titulo} eliminado`;
+                    mensaje = `Registro ${titulo} eliminado.`;
+                    clase = 'alert alert-danger';
+                    break;
+
+                case 'actualizar':
+                    mensaje = `Registro ${titulo} actualizado.`;
+                    clase = 'alert alert-info';
+                    break;
+
+                case 'crear':
+                    mensaje = `Registro ${titulo} creado.`;
+                    clase = 'alert alert-success';
+                    break;
             }
         }
 
@@ -58,7 +71,8 @@ export class NoticiaController {
                 usuario: 'Adrian',
                 arreglo: noticias, // AQUI!
                 booleano: false,
-                mensaje: mensaje
+                mensaje: mensaje,
+                clase: clase
             }
         );
     }
