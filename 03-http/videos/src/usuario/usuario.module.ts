@@ -7,7 +7,7 @@ import {UsuarioEntity} from "./usuario.entity";
 
 @Module({
     imports: [
-        TypeOrmModule
+         TypeOrmModule
             .forFeature([
                 UsuarioEntity
             ])
