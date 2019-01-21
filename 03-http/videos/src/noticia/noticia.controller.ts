@@ -1,10 +1,12 @@
 // noticia.controller.ts
 
-import {Body, Controller, Get, Param, Post, Query, Res} from "@nestjs/common";
+import {BadRequestException, Body, Controller, Get, Param, Post, Query, Res} from "@nestjs/common";
 import {Noticia} from "../app.controller";
 import {NoticiaService} from "./noticia.service";
 import {NoticiaEntity} from "./noticia-entity";
 import {FindManyOptions, Like} from "typeorm";
+import {CreateNoticiaDto} from "./dto/create-noticia.dto";
+import {validate, ValidationError} from "class-validator";
 
 @Controller('noticia')
 export class NoticiaController {
@@ -108,13 +110,30 @@ export class NoticiaController {
         @Res() response,
         @Body() noticia: Noticia
     ) {
-        const respuesta = await this._noticiaService.crear(noticia);
 
-        const parametrosConsulta = `?accion=crear&titulo=${noticia.titulo}`;
+        const objetoValidacionNoticia = new CreateNoticiaDto();
 
-        response.redirect(
-            '/noticia/inicio' + parametrosConsulta
-        )
+        objetoValidacionNoticia.titulo = noticia.titulo;
+        objetoValidacionNoticia.descripcion = noticia.descripcion;
+
+        const errores: ValidationError[] = 
+            await validate(objetoValidacionNoticia);
+
+        const hayErrores = errores.length>0;
+
+        if(hayErrores){
+            console.error(errores);
+            throw new BadRequestException({mensaje:'Error de validacion'})
+        }else{
+            const respuesta = await this._noticiaService.crear(noticia);
+
+            const parametrosConsulta = `?accion=crear&titulo=${noticia.titulo}`;
+
+            response.redirect(
+                '/noticia/inicio' + parametrosConsulta
+            )
+        }
+
     }
 
     @Get('actualizar-noticia/:idNoticia')
