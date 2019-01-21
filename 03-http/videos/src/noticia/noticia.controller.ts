@@ -116,13 +116,16 @@ export class NoticiaController {
         objetoValidacionNoticia.titulo = noticia.titulo;
         objetoValidacionNoticia.descripcion = noticia.descripcion;
 
-        const errores: ValidationError[] = 
+        const errores: ValidationError[] =
             await validate(objetoValidacionNoticia);
 
         const hayErrores = errores.length>0;
 
         if(hayErrores){
             console.error(errores);
+            // redirect crear noticia, Y
+            // En crear noticia deberian de mostrar mensajes
+            // (Como en la pantalla de INICIO)
             throw new BadRequestException({mensaje:'Error de validacion'})
         }else{
             const respuesta = await this._noticiaService.crear(noticia);
