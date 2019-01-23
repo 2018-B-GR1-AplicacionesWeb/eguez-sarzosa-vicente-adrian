@@ -423,14 +423,31 @@
                     return ciudad.idPais === +valorActualPais;
                 }
             )
-
-        console.log(ciudadesEncontradas);
         etiquetaSelectCiudades.disabled = false;
+        anadirEtiquetasCiudad(ciudadesEncontradas);
+
 
         // Popular el select de ciudades
     }
 
+    function anadirEtiquetasCiudad(arregloCiudades) {
+        removerElementosCiudad()
+        arregloCiudades
+            .forEach(
+                (ciudad) => {
+                    const option = document.createElement("option");
+                    option.value = ciudad.id;
+                    option.innerText = ciudad.nombre;
+                    etiquetaSelectCiudades.appendChild(option);
+                }
+            )
+    }
 
+    function removerElementosCiudad() {
+        while (etiquetaSelectCiudades.firstChild) {
+            etiquetaSelectCiudades.removeChild(etiquetaSelectCiudades.firstChild)
+        }
+    }
 
 
 </script>
