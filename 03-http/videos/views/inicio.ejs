@@ -290,7 +290,7 @@
 
         <div class="form-group">
             <label for="ciudades">Seleccionar ciudades</label>
-            <select class="form-control" id="ciudades">
+            <select disabled class="form-control" id="ciudades">
 
             </select>
         </div>
@@ -299,7 +299,6 @@
 
 
     <br>
-
 
 
     <div class="scroll-tabla">
@@ -352,7 +351,6 @@
     <br>
 
 
-
     <script>
         function imprimirEnConsola(evento) {
             evento.preventDefault();
@@ -379,12 +377,59 @@
             })
     })
 
+    // Escuchar los cambios SELECT PAISES
 
-    // HTTP -> GET paisID = 1
-    // HTTP -> GET paisID = 2
-    // HTTP -> GET paisID = 3
+    const etiquetaSelectPaises = document.getElementById('paises');
+    const etiquetaSelectCiudades = document.getElementById('ciudades');
 
-    
+    let valorActualPais = etiquetaSelectPaises.value;
+
+    const ciudades = [
+        {
+            idPais: 1,
+            nombre: 'Quito',
+            id: 1
+        },
+        {
+            idPais: 2,
+            nombre: 'Buenos Aires',
+            id: 2
+        },
+        {
+            idPais: 3,
+            nombre: 'Paris',
+            id: 3
+        },
+        {
+            idPais: 4,
+            nombre: 'Tokyo',
+            id: 4
+        },
+        {
+            idPais: 5,
+            nombre: 'Sidney',
+            id: 5
+        }
+    ];
+
+    etiquetaSelectPaises.onchange = (evento) => {
+        valorActualPais = etiquetaSelectPaises.value;
+        console.log('Valor actual del pais', valorActualPais);
+
+        // HTTP GET CONTROLADOR idPais = valorActualPais
+        const ciudadesEncontradas = ciudades
+            .filter(
+                (ciudad) => {
+                    return ciudad.idPais === +valorActualPais;
+                }
+            )
+
+        console.log(ciudadesEncontradas);
+        etiquetaSelectCiudades.disabled = false;
+
+        // Popular el select de ciudades
+    }
+
 
 
 
