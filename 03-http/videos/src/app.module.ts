@@ -17,11 +17,11 @@ import {UsuarioModule} from "./usuario/usuario.module";
         TypeOrmModule.forRoot(
             {
                 type: 'mysql',
-                host: '172.29.65.12',
+                host: 'localhost',
                 port: 32769,
-                database: 'noticias',
-                username: 'andreshcl',
-                password: '12345',
+                database: 'web',
+                username: 'adrian',
+                password: '12345678',
                 synchronize: true,
                 dropSchema: false,
                 entities: [
