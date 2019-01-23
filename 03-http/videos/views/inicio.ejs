@@ -17,7 +17,7 @@
 <body>
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -273,6 +273,35 @@
     <h2>Lista de Noticias</h2>
     <p>Listado de las noticias, actualice o elimine noticias.</p>
 
+    <br>
+
+    <form action="">
+
+        <div class="form-group">
+            <label for="paises">Seleccionar paises</label>
+            <select class="form-control" id="paises">
+                <option value="1">Ecuador</option>
+                <option value="2">Argentina</option>
+                <option value="3">Francia</option>
+                <option value="4">Japon</option>
+                <option value="5">Australia</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="ciudades">Seleccionar ciudades</label>
+            <select class="form-control" id="ciudades">
+
+            </select>
+        </div>
+
+    </form>
+
+
+    <br>
+
+
+
     <div class="scroll-tabla">
         <table class="table table-hover animated slideInLeft">
             <!-- tr -> table row -->
@@ -317,6 +346,11 @@
         </table>
     </div>
 
+    <br>
+    <br>
+    <br>
+    <br>
+
 
 
     <script>
@@ -344,6 +378,15 @@
                 container: 'body'
             })
     })
+
+
+    // HTTP -> GET paisID = 1
+    // HTTP -> GET paisID = 2
+    // HTTP -> GET paisID = 3
+
+    
+
+
 
 </script>
 
