@@ -96,10 +96,10 @@
 
     <!-- Button trigger modal -->
     <button type="button"
-            class="btn btn-primary"
+            class="btn btn-block btn-primary"
             data-toggle="modal"
             data-target="#ejemplo">
-        Launch demo modal
+        Mostrar Modal
     </button>
 
     <!-- Modal -->
@@ -188,17 +188,19 @@
     </div>
 
     <br>
-
+    <br>
 
     <button type="button"
-            class="btn btn-lg btn-danger popover-contenido"
+            class="btn btn-block btn-danger popover-contenido"
             data-toggle="popover"
             title="¿MMMM?"
-            data-content="No sera de tomar un traguito">
-        Click to toggle popover
+            data-content="No sera de tomar un traguito"
+            data-placement="bottom"
+    >
+        Ejemplo de popover
     </button>
 
-
+    <br>
     <br>
 
     <% const existeMensaje = typeof mensaje !== "undefined" %>
@@ -271,47 +273,50 @@
     <h2>Lista de Noticias</h2>
     <p>Listado de las noticias, actualice o elimine noticias.</p>
 
-    <table class="table table-hover animated slideInLeft">
-        <!-- tr -> table row -->
-        <thead>
-        <tr>
-            <!-- th -> table header -->
-            <th width="30%">Titulo</th>
-            <th width="50%">Descripcion</th>
-            <th width="20%">Acciones</th>
-        </tr>
-        </thead>
-        <!-- tr -> table row -->
-        <tbody>
-        <% arreglo.forEach( (noticia)=> { %>
+    <div class="scroll-tabla">
+        <table class="table table-hover animated slideInLeft">
+            <!-- tr -> table row -->
+            <thead>
             <tr>
-                <!-- td -> table detail -->
-                <td><%= noticia.titulo %></td>
-                <td><%= noticia.descripcion %></td>
-                <td>
-                    <form action="/noticia/eliminar/<%= noticia.id %>" method="POST">
-                        <!--<button type="button"> clickea sin problemas</button>
-                        <button>Yo tambien envio informacion</button>
-                        -->
-                        <button class="btn btn-outline-danger btn-block espaciado-boton"
-                                type="submit">
-                            Eliminar
-                        </button>
-                    </form>
-                    <a href="/noticia/actualizar-noticia/<%= noticia.id %>"
-                       class="quitar-link">
-                        <button
-                                class="btn btn-outline-info btn-block espaciado-boton">
-                            Actualizar
-                        </button>
-                    </a>
-
-
-                </td>
+                <!-- th -> table header -->
+                <th width="30%">Titulo</th>
+                <th width="50%">Descripcion</th>
+                <th width="20%">Acciones</th>
             </tr>
-        <% }) %>
-        </tbody>
-    </table>
+            </thead>
+            <!-- tr -> table row -->
+            <tbody>
+            <% arreglo.forEach( (noticia)=> { %>
+                <tr>
+                    <!-- td -> table detail -->
+                    <td><%= noticia.titulo %></td>
+                    <td><%= noticia.descripcion %></td>
+                    <td>
+                        <form action="/noticia/eliminar/<%= noticia.id %>" method="POST">
+                            <!--<button type="button"> clickea sin problemas</button>
+                            <button>Yo tambien envio informacion</button>
+                            -->
+                            <button class="btn btn-outline-danger btn-block espaciado-boton"
+                                    type="submit">
+                                Eliminar
+                            </button>
+                        </form>
+                        <a href="/noticia/actualizar-noticia/<%= noticia.id %>"
+                           class="quitar-link">
+                            <button
+                                    class="btn btn-outline-info btn-block espaciado-boton">
+                                Actualizar
+                            </button>
+                        </a>
+
+
+                    </td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
+
 
 
     <script>

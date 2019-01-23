@@ -1,7 +1,6 @@
 
-
 .espaciado-busqueda {
-    margin-top:31px;
+    margin-top: 31px;
 }
 
 .quitar-link:hover {
@@ -11,4 +10,9 @@
 .espaciado-boton {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.scroll-tabla {
+    height: 250px;
+    overflow: auto;
 }
