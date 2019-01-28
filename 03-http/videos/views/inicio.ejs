@@ -1,5 +1,3 @@
-
-
 <!-- No enviamos parametros desde el controlador -->
 
 <%- include('header',{titulo:'Gestion de Noticias'}); %>
@@ -8,9 +6,16 @@
 
 <!-- <link rel="stylesheet" href="">-->
 
+<% const roles = [{id: 1, nombre: 'usuario'}, {id: 2, nombre: 'administrador'}] %>
+
+<% const esUsuario = roles.find((rol) => rol.id === 1) %>
+
+<% const esAdministrador = roles.find((rol) => rol.id === 2) %>
 
 <div class="container">
 
+
+    <%- include('templates/perfil-usuario',{imagen:'https://img.desmotivaciones.es/201105/jkjh.jpg',nombre:'Adrian Eguez',correo:'adrian@epn.edu.ec'}) %>
 
     <br>
 
@@ -277,18 +282,30 @@
                             <!--<button type="button"> clickea sin problemas</button>
                             <button>Yo tambien envio informacion</button>
                             -->
+
+                            <% if(esAdministrador){%>
+
                             <button class="btn btn-outline-danger btn-block espaciado-boton"
                                     type="submit">
                                 Eliminar
                             </button>
+                            <% }%>
+
+
                         </form>
-                        <a href="/noticia/actualizar-noticia/<%= noticia.id %>"
-                           class="quitar-link">
-                            <button
-                                    class="btn btn-outline-info btn-block espaciado-boton">
-                                Actualizar
-                            </button>
-                        </a>
+
+                        <% if(esUsuario){%>
+
+                            <a href="/noticia/actualizar-noticia/<%= noticia.id %>"
+                               class="quitar-link">
+                                <button
+                                        class="btn btn-outline-info btn-block espaciado-boton">
+                                    Actualizar
+                                </button>
+                            </a>
+                        <% }%>
+
+
 
 
                     </td>

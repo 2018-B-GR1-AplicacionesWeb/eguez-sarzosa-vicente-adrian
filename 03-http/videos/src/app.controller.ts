@@ -164,6 +164,17 @@ export class AppController {
         @Res() res,
         @Session() sesion
     ) {
+
+        const ses = {
+            roles:[{
+                id:1,
+                nombre:'usuario'
+            },
+                {
+                    id:2,
+                    nombre:'administrador'
+                }]
+        }
         const respuesta = await this._usuarioService
             .autenticar(username, password);
 
