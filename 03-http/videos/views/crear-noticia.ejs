@@ -1,5 +1,8 @@
-<% const estaCreando = typeof noticia === "undefined"%>
 
+
+<%- include('header',{titulo:titulo})%>
+
+<% const estaCreando = typeof noticia === "undefined"%>
 
 <h1> <%= estaCreando ? 'Crear':'Actualizar' %> noticia</h1>
 
@@ -35,3 +38,7 @@
 <a href="/noticia/inicio">
     <button>Regresar</button>
 </a>
+
+<%- include('librerias')%>
+
+<%- include('footer')%>
