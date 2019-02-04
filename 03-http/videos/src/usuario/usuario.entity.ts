@@ -14,6 +14,11 @@ export class UsuarioEntity {
     @Column()
     password: string;
 
+    @Column({
+        type: 'date'
+    })
+    fecha: Date;
+
     @Column()
     tipo: string;
 
