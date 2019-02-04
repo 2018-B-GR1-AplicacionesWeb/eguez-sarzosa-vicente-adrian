@@ -8,7 +8,7 @@ import {
     Query,
     Param,
     Body,
-    Head, UnauthorizedException, Req, Res, Session
+    Head, UnauthorizedException, Req, Res, Session, FileInterceptor, UseInterceptors, UploadedFile
 } from '@nestjs/common';
 import {AppService} from './app.service';
 import {Observable, of} from "rxjs";
@@ -164,6 +164,17 @@ export class AppController {
         @Res() res,
         @Session() sesion
     ) {
+
+        const ses = {
+            roles: [{
+                id: 1,
+                nombre: 'usuario'
+            },
+                {
+                    id: 2,
+                    nombre: 'administrador'
+                }]
+        }
         const respuesta = await this._usuarioService
             .autenticar(username, password);
 
@@ -187,6 +198,31 @@ export class AppController {
         sesion.username = undefined;
         sesion.destroy();
         res.redirect('login');
+    }
+
+
+    @Post('upload')
+    @UseInterceptors(FileInterceptor(
+        'foto',
+        {
+            dest: __dirname + '/../archivos'
+        }
+    ))
+    uploadFile(@UploadedFile() file) {
+        console.log(__dirname + '/../archivos');
+        console.log(file);
+    }
+
+    @Get('download')
+    downloadFile(
+        @Query('id') idArchivo: string,
+        @Res() res) {
+        const carpetaURI = __dirname + '/../archivos/';
+
+        res.download(
+            carpetaURI + idArchivo,
+            'proyecto.pdf'
+        );
     }
 
 

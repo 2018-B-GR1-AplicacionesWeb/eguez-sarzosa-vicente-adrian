@@ -13,10 +13,11 @@ import {UsuarioModule} from "./usuario/usuario.module";
 
 @Module({
     imports: [
+
         TypeOrmModule.forRoot(
             {
                 type: 'mysql',
-                host: '172.29.65.255',
+                host: 'localhost',
                 port: 32769,
                 database: 'web',
                 username: 'adrian',
@@ -31,6 +32,7 @@ import {UsuarioModule} from "./usuario/usuario.module";
                 ]
             }
         ),
+
         NoticiaModule,
         UsuarioModule
         // app.module.ts
